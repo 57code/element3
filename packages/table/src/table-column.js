@@ -173,21 +173,25 @@ export default {
         column.renderCell = (h, data) => (
           <div class="cell">{originRenderCell(h, data)}</div>
         )
-        this.owner.renderExpanded = (h, data) => {
-          return this.$scopedSlots.default
-            ? this.$scopedSlots.default(data)
-            : this.$slots.default
-        }
+        // this.owner.renderExpanded = (h, data) => {
+        //   return this.$scopedSlots.default
+        //     ? this.$scopedSlots.default(data)
+        //     : this.$slots.default
+        // }
+        // TODO: xiaran
+        this.owner.renderExpanded = this.$slots.default
       } else {
         originRenderCell = originRenderCell || defaultRenderCell
         // 对 renderCell 进行包装
         column.renderCell = (h, data) => {
           let children = null
-          if (this.$scopedSlots.default) {
-            children = this.$scopedSlots.default(data)
-          } else {
-            children = originRenderCell(h, data)
-          }
+          // if (this.$scopedSlots.default) {
+          //   children = this.$scopedSlots.default(data)
+          // } else {
+          //   children = originRenderCell(h, data)
+          // }
+          // TODO: xiaran
+          children = originRenderCell(h, data)
           const prefix = treeCellPrefix(h, data)
           const props = {
             class: 'cell',

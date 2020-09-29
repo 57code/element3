@@ -1,6 +1,6 @@
 // import {h} from 'vue'
 import * as Vue from 'vue'
-import { renderList } from 'vue'
+import { renderList, h } from 'vue'
 import { hasClass, addClass, removeClass } from 'element-ui/src/utils/dom'
 import ElCheckbox from 'element-ui/packages/checkbox'
 import FilterPanel from './filter-panel.vue'
@@ -70,12 +70,23 @@ export default {
 
   mixins: [LayoutObserver],
 
-  render(h) {
+  render() {
     const originColumns = this.store.states.originColumns
     const columnRows = convertToRows(originColumns, this.columns)
     // 是否拥有多级表头
     const isGroup = columnRows.length > 1
     if (isGroup) this.$parent.isGroup = true
+
+    originColumns.forEach((v) => {
+      console.log('v', v)
+    })
+
+    this.columns.forEach((v) => {
+      console.log('v', v)
+    })
+
+    console.log('originColumns', originColumns, this.columns)
+    console.log('this.$parent.$vnode', this.$parent.$vnode)
     return (
       <table
         class="el-table__header"
@@ -137,8 +148,8 @@ export default {
                       ? column.renderHeader.call(this._renderProxy, h, {
                           column,
                           $index: cellIndex,
-                          store: this.store,
-                          _self: this.$parent.$vnode.context
+                          store: this.store
+                          // _self: this.$parent.$vnode.context
                         })
                       : column.label}
                     {column.sortable ? (

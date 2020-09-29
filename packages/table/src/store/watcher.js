@@ -482,10 +482,14 @@ export default {
           states.reserveSelection = column.reserveSelection
         }
 
-        if (this.table.$ready) {
-          this.updateColumns() // hack for dynamics insert column
-          this.scheduleLayout()
-        }
+        // TODO: xiaran
+        this.updateColumns() // hack for dynamics insert column
+        // this.scheduleLayout()
+        // if (this.table.$ready) {
+        //   console.log('updateColumns')
+        //   this.updateColumns() // hack for dynamics insert column
+        //   this.scheduleLayout()
+        // }
       },
 
       removeColumn(states, column, parent) {

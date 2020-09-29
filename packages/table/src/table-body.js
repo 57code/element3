@@ -386,7 +386,7 @@ export default {
             )
             const data = {
               store: this.store,
-              _self: this.context || this.table.$vnode.context,
+              // _self: this.context || this.table.$vnode.context,
               column: columnData,
               row,
               $index
