@@ -1,4 +1,4 @@
-import Store from './index'
+import { useStore } from './index'
 import debounce from 'throttle-debounce/debounce'
 
 export function createStore(table, initialState = {}) {
@@ -6,8 +6,7 @@ export function createStore(table, initialState = {}) {
     throw new Error('Table is required.')
   }
 
-  const store = new Store()
-  store.table = table
+  const store = useStore(table)
   // fix https://github.com/ElemeFE/element/issues/14075
   // related pr https://github.com/ElemeFE/element/pull/14146
   store.toggleAllSelection = debounce(10, store._toggleAllSelection)

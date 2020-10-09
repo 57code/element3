@@ -141,7 +141,9 @@ ComponentNames.forEach((name) => {
       'dropdown-item',
       'dropdown-menu',
       'collapse',
-      'collapse-item'
+      'collapse-item',
+      'table',
+      'table-column'
     ].indexOf(name) > -1
   ) {
     // 白名单 挨个替换
