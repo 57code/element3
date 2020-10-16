@@ -199,5 +199,10 @@ export function useTree({ table, assertRowKey, updateTableScrollY }) {
   watch(normalizedData, updateTreeData)
   watch(normalizedLazyNode, updateTreeData)
 
-  return { updateTreeExpandKeys, toggleTreeExpansion, loadOrToggle }
+  return {
+    updateTreeExpandKeys,
+    toggleTreeExpansion,
+    loadOrToggle,
+    treeStates: state.states
+  }
 }

@@ -11,6 +11,7 @@ import ElTooltip from 'element-ui/packages/tooltip'
 import debounce from 'throttle-debounce/debounce'
 import LayoutObserver from './layout-observer'
 import { mapStates } from './store/helper'
+import { h } from 'vue'
 
 export default {
   name: 'ElTableBody',
@@ -188,7 +189,6 @@ export default {
       if (this.store.states.expandRows.indexOf(row) > -1) {
         classes.push('expanded')
       }
-
       return classes
     },
 
@@ -386,7 +386,7 @@ export default {
             )
             const data = {
               store: this.store,
-              _self: this.context || this.table.$vnode.context,
+              _self: this.context || this.table.$parent,
               column: columnData,
               row,
               $index
@@ -419,8 +419,8 @@ export default {
                 on-mouseleave={this.handleCellMouseLeave}
               >
                 {column.renderCell.call(
-                  this._renderProxy,
-                  this.$createElement,
+                  this,
+                  h,
                   data,
                   columnsHidden[cellIndex]
                 )}
@@ -453,7 +453,7 @@ export default {
             tr,
             <tr key={'expanded-row__' + tr.key}>
               <td colspan={this.columnsCount} class="el-table__expanded-cell">
-                {renderExpanded(this.$createElement, {
+                {renderExpanded(h, {
                   row,
                   $index,
                   store: this.store

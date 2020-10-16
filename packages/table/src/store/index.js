@@ -40,6 +40,39 @@ const doFlattenColumns = (columns) => {
 }
 
 export function useStore(table) {
+  const {
+    updateTreeExpandKeys,
+    toggleTreeExpansion,
+    loadOrToggle,
+    treeStates
+  } = useTree({
+    table,
+    assertRowKey,
+    updateTableScrollY
+  })
+
+  const {
+    isRowExpanded,
+    setExpandRowKeys,
+    toggleRowExpansion,
+    updateExpandRows,
+    expandRows
+  } = useExpand({
+    table,
+    scheduleLayout,
+    assertRowKey
+  })
+
+  const {
+    setCurrentRowKey,
+    updateCurrentRow,
+    updateCurrentRowData,
+    currentStates
+  } = useCurrent({
+    table,
+    assertRowKey
+  })
+
   const state = reactive({
     states: {
       // 3.0 版本后要求必须设置该属性
@@ -80,7 +113,18 @@ export function useStore(table) {
       sortProp: null,
       sortOrder: null,
 
-      hoverRow: null
+      hoverRow: null,
+
+      // tree data
+      lazyTreeNodeMap: treeStates.lazyTreeNodeMap,
+      treeData: treeStates.treeData,
+      childrenColumnName: treeStates.childrenColumnName,
+
+      // expandRows
+      expandRows,
+
+      // current
+      currentRow: currentStates.currentRow
     }
   })
 
@@ -101,32 +145,6 @@ export function useStore(table) {
   function updateTableScrollY() {
     nextTick(table.updateScrollY)
   }
-
-  const { updateTreeExpandKeys, toggleTreeExpansion, loadOrToggle } = useTree({
-    table,
-    assertRowKey,
-    updateTableScrollY
-  })
-
-  const {
-    setCurrentRowKey,
-    updateCurrentRow,
-    updateCurrentRowData
-  } = useCurrent({
-    table,
-    assertRowKey
-  })
-
-  const {
-    isRowExpanded,
-    setExpandRowKeys,
-    toggleRowExpansion,
-    updateExpandRows
-  } = useExpand({
-    table,
-    scheduleLayout,
-    assertRowKey
-  })
 
   // 更新列
   function updateColumns() {
@@ -578,7 +596,7 @@ export function useStore(table) {
 
   function commit(name, ...args) {
     if (mutations[name]) {
-      mutations[name]([state.states].concat(args))
+      mutations[name].apply(null, [state.states].concat(args))
     } else {
       throw new Error(`Action not found: ${name}`)
     }

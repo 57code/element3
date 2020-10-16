@@ -6,6 +6,7 @@ import {
 } from './config'
 import { mergeOptions, parseWidth, parseMinWidth, compose } from './util'
 import ElCheckbox from 'element-ui/packages/checkbox'
+import { h } from 'vue'
 
 let columnIdSeed = 1
 
@@ -160,7 +161,7 @@ export default {
         )
       } else if (column.type !== 'selection') {
         column.renderHeader = (h, scope) => {
-          const renderHeader = this.$scopedSlots.header
+          const renderHeader = this.$slots.header
           return renderHeader ? renderHeader(scope) : column.label
         }
       }
@@ -173,17 +174,15 @@ export default {
           <div class="cell">{originRenderCell(h, data)}</div>
         )
         this.owner.renderExpanded = (h, data) => {
-          return this.$scopedSlots.default
-            ? this.$scopedSlots.default(data)
-            : this.$slots.default
+          return this.$slots.default ? this.$slots.default(data) : null
         }
       } else {
         originRenderCell = originRenderCell || defaultRenderCell
         // 对 renderCell 进行包装
         column.renderCell = (h, data) => {
           let children = null
-          if (this.$scopedSlots.default) {
-            children = this.$scopedSlots.default(data)
+          if (this.$slots.default) {
+            children = this.$slots.default(data)
           } else {
             children = originRenderCell(h, data)
           }
@@ -377,8 +376,8 @@ export default {
     )
   },
 
-  render(h) {
+  render() {
     // slots 也要渲染，需要计算合并表头
-    return h('div', this.$slots.default)
+    return h('div', this.$slots.default ? this.$slots.default() : null)
   }
 }

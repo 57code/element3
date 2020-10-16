@@ -270,7 +270,6 @@ import {
 } from 'element-ui/src/utils/resize-event'
 import Mousewheel from 'element-ui/src/directives/mousewheel'
 import Locale from 'element-ui/src/mixins/locale'
-import Migrating from 'element-ui/src/mixins/migrating'
 import { createStore, mapStates } from './store/helper'
 import TableLayout from './table-layout'
 import TableBody from './table-body'
@@ -283,7 +282,7 @@ let tableIdSeed = 1
 export default {
   name: 'ElTable',
 
-  mixins: [Locale, Migrating],
+  mixins: [Locale],
 
   directives: {
     Mousewheel
@@ -385,6 +384,8 @@ export default {
 
     load: Function
   },
+
+  emits: ['selection-change', 'current-change'],
 
   components: {
     TableHeader,

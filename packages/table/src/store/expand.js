@@ -64,6 +64,7 @@ export function useExpand({ table, scheduleLayout, assertRowKey }) {
     isRowExpanded,
     setExpandRowKeys,
     toggleRowExpansion,
-    updateExpandRows
+    updateExpandRows,
+    expandRows: state.states.expandRows
   }
 }

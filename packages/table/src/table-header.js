@@ -1,4 +1,4 @@
-// import {h} from 'vue'
+import { h, renderList } from 'vue'
 import * as Vue from 'vue'
 import { hasClass, addClass, removeClass } from 'element-ui/src/utils/dom'
 import ElCheckbox from 'element-ui/packages/checkbox'
@@ -69,7 +69,7 @@ export default {
 
   mixins: [LayoutObserver],
 
-  render(h) {
+  render() {
     const originColumns = this.store.states.originColumns
     const columnRows = convertToRows(originColumns, this.columns)
     // 是否拥有多级表头
@@ -89,7 +89,7 @@ export default {
           {this.hasGutter ? <col name="gutter" /> : ''}
         </colgroup>
         <thead class={[{ 'is-group': isGroup, 'has-gutter': this.hasGutter }]}>
-          {this._l(columnRows, (columns, rowIndex) => (
+          {renderList(columnRows, (columns, rowIndex) => (
             <tr
               style={this.getHeaderRowStyle(rowIndex)}
               class={this.getHeaderRowClass(rowIndex)}
@@ -133,11 +133,11 @@ export default {
                     ]}
                   >
                     {column.renderHeader
-                      ? column.renderHeader.call(this._renderProxy, h, {
+                      ? column.renderHeader.call(this, h, {
                           column,
                           $index: cellIndex,
                           store: this.store,
-                          _self: this.$parent.$vnode.context
+                          _self: this.$parent.$parent
                         })
                       : column.label}
                     {column.sortable ? (

@@ -23,7 +23,7 @@ export function useCurrent({ table, assertRowKey }) {
   }
 
   function setCurrentRowByKey(key) {
-    const states = state.state
+    const { states } = state
     const { data = [], rowKey } = states
     let currentRow = null
     if (rowKey) {
@@ -73,6 +73,10 @@ export function useCurrent({ table, assertRowKey }) {
       restoreCurrentRowKey()
     }
   }
-
-  return { setCurrentRowKey, updateCurrentRow, updateCurrentRowData }
+  return {
+    setCurrentRowKey,
+    updateCurrentRow,
+    updateCurrentRowData,
+    currentStates: state.states
+  }
 }
