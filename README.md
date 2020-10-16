@@ -43,26 +43,29 @@ A Vue.js 3.0 UI Toolkit for Web.
 ## Install
 
 ```shell
-npm install element-ui -S
+npm install element3 -S
 ```
 
 ## Quick Start
 
 ```js
-import Vue from 'vue'
-import Element from 'element-ui'
+import { createApp } from 'vue'
+import App from './App.vue'
+import Element3 from 'element3'
 
-Vue.use(Element)
+// global import
+const app = createApp(App)
+app.use(Element3)
 
-// or
+// or according to the need to import
 import {
-  Select,
-  Button
+  ElLink,
+  ElButton
   // ...
-} from 'element-ui'
+} from 'element3'
 
-Vue.component(Select.name, Select)
-Vue.component(Button.name, Button)
+app.component(ElLink.name, ElLink)
+app.component(ElButton.name, ElButton)
 ```
 
 ## Documentation
@@ -87,8 +90,6 @@ Please make sure to read the [Contributing Guide](https://juejin.im/post/6864462
 
 Thank you to all the people who already contributed to Element3!
 
-
-
 ## Join Discussion Group
 
 Scan the QR code using [Dingtalk App](https://www.dingtalk.com/) to join in discussion group :
@@ -98,4 +99,3 @@ Scan the QR code using [Dingtalk App](https://www.dingtalk.com/) to join in disc
 ## License
 
 [MIT](http://opensource.org/licenses/MIT)
-

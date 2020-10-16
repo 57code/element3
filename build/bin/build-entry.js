@@ -145,6 +145,8 @@ ComponentNames.forEach((name) => {
       'table',
       'table-column',
       'message-box',
+      'tabs',
+      'tab-pane',
       'color-picker',
       'cascader',
       'cascader-panel'
